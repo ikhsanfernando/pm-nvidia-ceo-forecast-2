@@ -16,6 +16,8 @@ W_VOL = 0.8
 
 
 def clean(prices):
+    """Keep finite numeric prices and clamp them to [0, 1]."""
+    # NaNs poison every downstream quantile and volatility calculation, so drop them before clamping.
     out = [p for p in prices if isinstance(p, (int, float)) and math.isfinite(p)]
     return [min(1.0, max(0.0, p)) for p in out]
 
